@@ -1,4 +1,4 @@
-# SeqAn3 App Template [![build status][1]][2] [![codecov][3]][4]
+# nanoCDS [![build status][1]][2] [![codecov][3]][4]
 <!--
     Above uses reference-style links with numbers.
     See also https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links.
@@ -49,22 +49,8 @@
 -->
 [4]: https://codecov.io/gh/seqan/app-template
 
-This is a template for app developers with SeqAn3.
-You can easily clone this repository and modify the existing code to your needs.
-It provides the elementary set-up for all SeqAn3 applications.
+nanoCDS is a small tool to downsample fastq files generated from Oxford Nanopore Technologies (minion, promethion, etc...).
+Users can downsample their sequencing data to a specified number of megabases or to reads generated within a window of time.
+The downsampled data is meant to better simulate lower coverage than random sampling of reads especially for real-time applications.
 
-The example application is a FastQ to FastA file format converter.
-It demonstrates exemplarily the set-up of test cases, documentation, and build infrastructure.
-Probably you want to name your app differently — simply replace `app-template` with your app name in the following.
-Please note that the command line interface tests fail if you use an individual project name without adapting the
-name in the test file.
-
-Instructions:
-1. clone this repository: `git clone --recurse-submodules https://github.com/seqan/app-template.git app-template`
-2. edit the project name in the *project* command of `app-template/CMakeLists.txt`
-3. create a build directory and visit it: `mkdir build && cd build`
-4. run cmake: `cmake ../app-template`
-5. build the application: `make`
-6. optional: build and run the tests: `make test`
-7. optional: build the api documentation: `make doc`
-8. execute the app: `./bin/app-template`
+nanoCDS is based off the SeqAn3 app-template and makes heavy use of this library.
