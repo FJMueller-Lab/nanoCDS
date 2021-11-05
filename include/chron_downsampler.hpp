@@ -10,4 +10,4 @@
 
 #include <seqan3/std/filesystem>
 
-void cycle_fastq(std::filesystem::path fastq_file, std::filesystem::path out);
+void build_fast_queue(std::filesystem::path fastq_file);
