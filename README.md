@@ -49,8 +49,13 @@
 -->
 [4]: https://codecov.io/gh/seqan/app-template
 
-nanoCDS is a small tool to downsample fastq files generated from Oxford Nanopore Technologies (minion, promethion, etc...).
-Users can downsample their sequencing data to a specified number of megabases or to reads generated within a window of time.
+nanoCDS is a small tool for chronologically downsampling fastq files generated from Oxford Nanopore Technologies (minion, promethion, etc...).
+Users can downsample their sequencing data to reads generated within a window of time.
 The downsampled data is meant to better simulate lower coverage than random sampling of reads especially for real-time applications.
+
+Usage:
+```bash
+nanoCDS -m 60 test_ont.fastq # Get all reads generated within the first hour of sequencing
+```
 
 nanoCDS is based off the SeqAn3 app-template and makes heavy use of this library.
