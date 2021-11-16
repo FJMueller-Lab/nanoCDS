@@ -1,4 +1,3 @@
-#include <sstream>
 #include <seqan3/argument_parser/all.hpp>
 #include "chron_downsampler.hpp"
 
@@ -6,9 +5,9 @@
 struct cmd_arguments
 {
     std::filesystem::path fastq_file{};
-    uint32_t megabases{};
     uint32_t minutes{};
 };
+
 
 void initialise_argument_parser(seqan3::argument_parser & parser, cmd_arguments & args)
 {
@@ -19,12 +18,10 @@ void initialise_argument_parser(seqan3::argument_parser & parser, cmd_arguments 
     parser.add_positional_option(args.fastq_file, "Please provide a fastq file.",
                                  seqan3::input_file_validator{{"fq","fastq"}});
 
-    parser.add_option(args.megabases, 'm', "megabases",
-                      "Downsample to a specified number of Megabases");
-
-    parser.add_option(args.minutes, 'w', "time-window",
-                      "Specify a window of time to take reads from");
+    parser.add_option(args.minutes, 'm', "minutes",
+                      "Specify an amount of time you'd like to sample from [in minutes]");
 }
+
 
 int main(int argc, char ** argv)
 {
@@ -40,6 +37,7 @@ int main(int argc, char ** argv)
         std::cerr << "Parsing error. " << ext.what() << "\n";
         return -1;
     }
-    build_fast_queue(cmd_args.fastq_file);
+    fastQueue fast_queue = build_fast_queue(cmd_args.fastq_file);
+    write_chrono_downsampled(fast_queue, cmd_args.minutes);
     return 0;
 }
