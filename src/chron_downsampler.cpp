@@ -26,8 +26,7 @@ std::pair<std::string, std::string> compute_stop_time(fastQueue &fast_queue, uin
     down_stop_tp += std::chrono::minutes(minutes);
 
     // Reformat stop time as string
-    std::string stop_time;
-    stop_time = format("%FT%TZ", down_stop_tp);
+    std::string stop_time = format("%FT%TZ", down_stop_tp);
     seqan3::debug_stream << " | Sampling reads until: " << stop_time << std::endl;
     return std::make_pair(run_start_time, stop_time);
 }
@@ -75,8 +74,8 @@ void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes)
     std::string stop_ts = start_stop.second;
     // Start writing
     while(fast_queue.top().first < stop_ts) {
-        rp queue_pop = fast_queue.top();
-        fout.push_back(queue_pop.second);
+        rp front = fast_queue.top();
+        fout.push_back(front.second);
         fast_queue.pop();
     }
 }
