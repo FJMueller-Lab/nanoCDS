@@ -53,7 +53,19 @@ nanoCDS is a small tool for chronologically downsampling fastq files generated f
 Users can downsample their sequencing data to reads generated within a window of time.
 The downsampled data is meant to better simulate lower coverage than random sampling of reads especially for real-time applications.
 
-Usage:
+## Install
+Clone
+```bash
+git clone --recurse-submodules git@github.com:remyschwab/nanoCDS.git && cd nanoCDS
+```
+Build
+```bash
+cd nanoCDS && mkdir build
+cmake ..
+make
+```
+
+## Usage:
 ```bash
 nanoCDS -m 60 test_ont.fastq # Get all reads generated within the first hour of sequencing
 ```
