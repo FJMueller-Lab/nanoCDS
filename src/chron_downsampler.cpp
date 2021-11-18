@@ -1,5 +1,6 @@
 //
 // Created by Remy Schwab on 03.11.21.
+// https://www.biostars.org/p/337503/
 //
 #include "chron_downsampler.hpp"
 
@@ -20,11 +21,9 @@ std::pair<std::string, std::string> compute_stop_time(fastQueue &fast_queue, uin
     rp queue_top = fast_queue.top();
     std::string run_start_time = queue_top.first;
     seqan3::debug_stream << "First read detected at: " << run_start_time;
-
     // Add user-specified time interval
     date::sys_time<std::chrono::seconds> down_stop_tp = parse8601(run_start_time);
     down_stop_tp += std::chrono::minutes(minutes);
-
     // Reformat stop time as string
     std::string stop_time = format("%FT%TZ", down_stop_tp);
     seqan3::debug_stream << " | Sampling reads until: " << stop_time << std::endl;
@@ -53,7 +52,7 @@ fastQueue build_fast_queue(std::filesystem::path fastq_file)
     std::priority_queue<rp, std::vector<rp>, std::greater<rp>> fast_queue;
     std::string record_start;
     seqan3::debug_stream << "Reading records and building priority queue... ";
-    for(auto &record : fin)
+    for(auto record : fin)
     {
         record_start = extract_read_time(record.id());
         fast_queue.push(std::make_pair(record_start, record));
@@ -74,8 +73,7 @@ void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes)
     std::string stop_ts = start_stop.second;
     // Start writing
     while(fast_queue.top().first < stop_ts) {
-        rp front = fast_queue.top();
-        fout.push_back(front.second);
+        fout.push_back(fast_queue.top().second);
         fast_queue.pop();
     }
 }
