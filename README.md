@@ -70,4 +70,5 @@ make
 nanoCDS -m 60 test_ont.fastq # Get all reads generated within the first hour of sequencing
 ```
 
+## Note
 nanoCDS is based off the SeqAn3 app-template and makes heavy use of this library.
