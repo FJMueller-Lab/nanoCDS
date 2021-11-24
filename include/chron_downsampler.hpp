@@ -17,4 +17,4 @@ using fastQueue = typename std::priority_queue<rp, std::vector<rp>, std::greater
 
 
 fastQueue build_fast_queue(std::filesystem::path fastq_file);
-void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes);
+void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes, std::string outfile);

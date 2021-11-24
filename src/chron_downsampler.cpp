@@ -14,6 +14,13 @@ date::sys_time<std::chrono::seconds> parse8601(std::string is)
 }
 
 
+std::string remove_extension(std::string in_file_name)
+{
+    size_t lastindex = in_file_name.find_last_of(".");
+    return in_file_name.substr(0, lastindex);
+}
+
+
 std::pair<std::string, std::string> compute_stop_time(fastQueue &fast_queue, uint32_t &minutes)
 {
     using namespace date;
@@ -26,7 +33,7 @@ std::pair<std::string, std::string> compute_stop_time(fastQueue &fast_queue, uin
     down_stop_tp += std::chrono::minutes(minutes);
     // Reformat stop time as string
     std::string stop_time = format("%FT%TZ", down_stop_tp);
-    seqan3::debug_stream << " | Sampling reads until: " << stop_time << std::endl;
+    seqan3::debug_stream << " --> Sampling reads until: " << stop_time << std::endl;
     return std::make_pair(run_start_time, stop_time);
 }
 
@@ -62,15 +69,15 @@ fastQueue build_fast_queue(std::filesystem::path fastq_file)
 }
 
 
-void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes)
+void write_chrono_downsampled(fastQueue &fast_queue, uint32_t &minutes, std::string infile)
 {
     // File stuff
     std::filesystem::path current_path = std::filesystem::current_path();
-    seqan3::sequence_file_output fout{current_path / "downsampled.fastq"};
+    std::string ofile = remove_extension(infile)+"_CDS.fastq";
+    seqan3::sequence_file_output fout{current_path / ofile};
     // Get Start/Stop info
     std::pair<std::string, std::string> start_stop = compute_stop_time(fast_queue, minutes);
-    std::string start_ts = start_stop.first;
-    std::string stop_ts = start_stop.second;
+    std::string start_ts = start_stop.first, stop_ts = start_stop.second;
     // Start writing
     while(fast_queue.top().first < stop_ts) {
         fout.push_back(fast_queue.top().second);
