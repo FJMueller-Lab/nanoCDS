@@ -42,13 +42,13 @@ std::string extract_read_time(std::string &record_id)
 {
     std::istringstream ss(record_id);
     std::string word;
-    std::vector<std::string> words{};
     while (ss >> word)
     {
-        words.push_back(word);
+        if(word.rfind("start", 0) == 0) {
+            break;
+        }
     }
-    std::string timestamp = words[5];
-    return timestamp.substr(11,20);
+    return word.substr(11,20);
 }
 
 
