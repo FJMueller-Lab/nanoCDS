@@ -60,7 +60,8 @@ git clone --recurse-submodules git@github.com:remyschwab/nanoCDS.git && cd nanoC
 ```
 Build
 ```bash
-cd nanoCDS && mkdir build
+cd nanoCDS 
+mkdir build && cd build
 cmake ..
 make
 ```
